@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "lib": ["ES2020", "DOM"],
+    "target": "ES2015",
+    "module": "ES2015",
+    "outDir": "lib",
+    "moduleResolution": "Node",
+    "jsx": "react-jsx",
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "declaration": true,
+    "stripInternal": true
+  },
+  "include": ["src"]
+}
