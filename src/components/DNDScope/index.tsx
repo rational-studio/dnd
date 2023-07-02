@@ -302,4 +302,12 @@ export function useInternalDNDScope() {
   return useContext(InternalContext);
 }
 
+/**
+ * Currently it exposes all the internal state of the DND scope.
+ * Later we might want to expose only the necessary state.
+ */
+export function useDNDScope() {
+  return useInternalDNDScope().store;
+}
+
 export default DNDScope;
