@@ -143,7 +143,6 @@ export function useDraggable<DraggablePayload extends DataPayload>(
       const draggable = {
         _identity,
         payload: { type, data },
-        node: draggableElement,
         action,
         animated,
         cursor,
@@ -154,7 +153,7 @@ export function useDraggable<DraggablePayload extends DataPayload>(
       store.setState(state => {
         // Drag is starting, take a snapshot of Rect of all Droppables
         const droppableRects = state.droppables.map(item =>
-          clientDOMRectToRect(item.node.getBoundingClientRect())
+          item.boundingClientRect()
         );
         const droppableUpdater = getDroppableCollisionUpdate(
           type,

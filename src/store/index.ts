@@ -12,7 +12,6 @@ export interface DraggableItem<Payload extends DataPayload = DataPayload> {
   action: 'move' | 'resize-start' | 'resize-end' | 'create';
   animated: boolean;
   payload: Payload;
-  node: HTMLElement;
   cleanupFn: () => void;
 }
 
@@ -27,11 +26,11 @@ export type CollisionDetectionAlgorithm = (
 
 export interface DroppableItem<
   DroppablePayload extends DataPayload = DataPayload,
-  DraggablePayload extends DataPayload = DataPayload
+  DraggablePayload extends DataPayload = DataPayload,
 > {
   _identity: string;
   payload: DroppablePayload;
-  node: HTMLElement;
+  boundingClientRect: () => Rect;
   accepts: readonly DraggablePayload['type'][];
   onDropRef: React.MutableRefObject<
     | ((
@@ -48,7 +47,7 @@ export interface DroppableItem<
  */
 export interface DNDState<
   DraggablePayload extends DataPayload,
-  DroppablePayload extends DataPayload
+  DroppablePayload extends DataPayload,
 > {
   activeDraggable: null | DraggableItem<DraggablePayload>;
   lastKnownActiveDraggabble: null | DraggableItem<DraggablePayload>;
@@ -87,7 +86,7 @@ const initialState = {
  */
 export function dndState<
   DraggablePayload extends DataPayload,
-  DroppablePayload extends DataPayload
+  DroppablePayload extends DataPayload,
 >(): DNDState<DraggablePayload, DroppablePayload> {
   return initialState;
 }

@@ -2,11 +2,12 @@ import { useEffect, useId, useRef, useState } from 'react';
 
 import { useInternalDNDScope } from '../components/DNDScope';
 import type { DataPayload, DraggableItem, Rect } from '../store';
+import { clientDOMRectToRect } from './utils';
 
 type DroppableOptions<
   DroppablePayload extends DataPayload,
   DraggablePayload extends DataPayload,
-  AcceptedDraggableTypes extends readonly string[]
+  AcceptedDraggableTypes extends readonly string[],
 > = {
   accepts: AcceptedDraggableTypes;
   payload: DroppablePayload;
@@ -19,7 +20,7 @@ type DroppableOptions<
 export function useDroppable<
   DroppablePayload extends DataPayload,
   DraggablePayload extends DataPayload,
-  AcceptedDraggableTypes extends readonly string[]
+  AcceptedDraggableTypes extends readonly string[],
 >(
   options: DroppableOptions<
     DroppablePayload,
@@ -74,7 +75,8 @@ export function useDroppable<
               data,
             },
             onDropRef,
-            node: element,
+            boundingClientRect: () =>
+              clientDOMRectToRect(element.getBoundingClientRect()),
           },
         ],
       };
