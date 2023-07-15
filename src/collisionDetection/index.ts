@@ -1,4 +1,3 @@
-import { clientDOMRectToRect } from '../hooks/utils';
 import type { CollisionDetectionAlgorithm } from '../store';
 import {
   rectangleIntersection as _rectangleIntersection,
@@ -14,13 +13,10 @@ export const rectangleIntersection: CollisionDetectionAlgorithm = (
 ) => {
   const collisionInfo = droppableItems
     .map(item => {
-      const droppableRect = item.node.getBoundingClientRect();
+      const droppableRect = item.boundingClientRect();
       return {
         item,
-        ratio: _rectangleIntersection(
-          clientDOMRectToRect(droppableRect),
-          draggableRect
-        ),
+        ratio: _rectangleIntersection(droppableRect, draggableRect),
       };
     })
     .filter(({ ratio }) => ratio > 0)
@@ -36,7 +32,7 @@ export const pointerWithin: CollisionDetectionAlgorithm = (
 ) => {
   const collisionInfo = droppableItems
     .map(item => {
-      const rect = clientDOMRectToRect(item.node.getBoundingClientRect());
+      const rect = item.boundingClientRect();
       return {
         item,
         effectiveDistance: isPointerWithin(mouseCoord, rect)
@@ -59,9 +55,7 @@ export const closestCenter: CollisionDetectionAlgorithm = (
   const draggableCenter = centerOfRectangle(draggableRect);
   const collisionInfo = droppableItems
     .map(item => {
-      const droppableCenter = centerOfRectangle(
-        clientDOMRectToRect(item.node.getBoundingClientRect())
-      );
+      const droppableCenter = centerOfRectangle(item.boundingClientRect());
       return {
         item,
         distance: distanceBetween(draggableCenter, droppableCenter),
@@ -78,7 +72,7 @@ export const closestCorners: CollisionDetectionAlgorithm = (
   const draggableCorners = cornersOfRectangle(draggableRect);
   const collisionInfo = droppableItems
     .map(item => {
-      const rect = clientDOMRectToRect(item.node.getBoundingClientRect());
+      const rect = item.boundingClientRect();
       const droppableCorners = cornersOfRectangle(rect);
       return {
         item,
