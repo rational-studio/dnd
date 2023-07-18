@@ -204,8 +204,12 @@ const DNDOverlay: React.FC<{
       ) : null}
       <Portal>
         <div
-          className="fixed left-0 top-0 z-50 will-change-transform"
           style={{
+            position: 'fixed',
+            left: 0,
+            top: 0,
+            zIndex: 50,
+            willChange: 'transform',
             display: 'none',
           }}
           ref={setDraggableOverlayElement}
