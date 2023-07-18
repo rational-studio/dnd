@@ -28,6 +28,9 @@ export interface DroppableItem<
   DroppablePayload extends DataPayload = DataPayload,
   DraggablePayload extends DataPayload = DataPayload,
 > {
+  /**
+   * @internal
+   */
   _identity: string;
   payload: DroppablePayload;
   boundingClientRect: () => Rect;

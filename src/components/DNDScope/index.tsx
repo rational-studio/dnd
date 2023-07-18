@@ -76,6 +76,9 @@ interface DNDScopeContext {
     | ((activeDraggable: DraggableItem, currentDraggableRect: Rect) => void)
     | undefined
   >;
+  onDragCancelRef: MutableRefObject<
+    ((activeDraggable: DraggableItem) => void) | undefined
+  >;
 }
 
 const InternalContext = createContext<DNDScopeContext>({
@@ -83,6 +86,7 @@ const InternalContext = createContext<DNDScopeContext>({
   distanceConstraint: 0,
   collisionDetectionRef: { current: rectangleIntersection },
   onDragStartRef: { current: undefined },
+  onDragCancelRef: { current: undefined },
 });
 
 const DNDScope: FC<DNDScopeProps> = ({
@@ -288,6 +292,7 @@ const DNDScope: FC<DNDScopeProps> = ({
         distanceConstraint,
         collisionDetectionRef,
         onDragStartRef,
+        onDragCancelRef,
       }}
     >
       {children}

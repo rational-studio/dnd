@@ -32,8 +32,13 @@ export function useBaseDraggable<DraggablePayload extends DataPayload>(
     axis = 'xy',
   } = options;
 
-  const { store, distanceConstraint, collisionDetectionRef, onDragStartRef } =
-    useInternalDNDScope();
+  const {
+    store,
+    distanceConstraint,
+    collisionDetectionRef,
+    onDragStartRef,
+    onDragCancelRef,
+  } = useInternalDNDScope();
 
   const [isActiveDraggable, setIsActiveDraggable] = useState(
     () => store.getState().activeDraggable?._identity === _identity
@@ -146,9 +151,26 @@ export function useBaseDraggable<DraggablePayload extends DataPayload>(
     ]
   );
 
+  const endDraggingPrematurely = useCallback(() => {
+    store.setState(state => {
+      const { activeDraggable } = state;
+      if (activeDraggable && activeDraggable._identity === _identity) {
+        onDragCancelRef.current?.(activeDraggable);
+        activeDraggable.cleanupFn();
+        return {
+          ...state,
+          activeDraggable: null,
+          activeDroppable: null,
+        };
+      }
+      return state;
+    });
+  }, [_identity, onDragCancelRef, store]);
+
   return {
     setInitialMouseCoord,
     startDragging,
+    endDraggingPrematurely,
     isActiveDraggable,
   };
 }
