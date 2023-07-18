@@ -1,12 +1,12 @@
 {
   "name": "@rational/dnd",
-  "version": "0.3.0-beta.2",
+  "version": "0.3.0-beta.3",
   "description": "Flexible and magical drag-and-drop for React",
   "main": "lib/index.js",
   "module": "lib/index.js",
   "sideEffects": false,
   "scripts": {
-    "build": "tsc",
+    "build": "rimraf ./lib && tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -19,6 +19,7 @@
     "eslint-plugin-rational-studio": "^0.21.0",
     "prettier": "^3.0.0",
     "react": "^18.2.0",
+    "rimraf": "^5.0.1",
     "typescript": "^5.1.6",
     "zustand": "^4.3.9"
   },

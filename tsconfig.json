@@ -8,6 +8,8 @@
     "jsx": "react-jsx",
     "strict": true,
     "forceConsistentCasingInFileNames": true,
+    "sourceMap": true,
+    "declarationMap": true,
     "declaration": true,
     "stripInternal": true
   },

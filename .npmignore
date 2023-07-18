@@ -2,3 +2,5 @@ src
 pnpm-lock.yaml
 tsconfig.json
 .DS_Store
+prettier.config.js
+.eslintrc
