@@ -41,6 +41,7 @@ function delta(a: Coord, b: Coord): Coord {
 
 interface DNDScopeProps {
   children: ReactNode;
+  dndType?: 'pointer' | 'dnd';
   distanceConstraint?: number;
   dragOverlayPosition?: PositionTransformer;
   positionOverlayPosition?: PositionTransformer;
@@ -99,6 +100,7 @@ const DNDScope: FC<DNDScopeProps> = ({
   onDragOver,
   onDragEnd,
   onDragCancel,
+  dndType = 'pointer',
 }) => {
   const [store] = useState(createDNDStore);
 
@@ -135,6 +137,9 @@ const DNDScope: FC<DNDScopeProps> = ({
       return;
     }
 
+    const moveEvent = dndType === 'pointer' ? 'pointermove' : 'dragover';
+    const endEvent = dndType === 'pointer' ? 'pointerup' : 'dragend';
+
     function handleCancel() {
       if (activeDraggable) {
         onDragCancelRef.current?.(activeDraggable);
@@ -146,7 +151,7 @@ const DNDScope: FC<DNDScopeProps> = ({
       });
     }
 
-    function handleMove(this: Window, event: PointerEvent) {
+    function handleMove(this: Window, event: PointerEvent | DragEvent) {
       if (!activeDraggable) {
         return;
       }
@@ -227,7 +232,7 @@ const DNDScope: FC<DNDScopeProps> = ({
       });
     }
 
-    function handleEnd(this: Window, event: PointerEvent) {
+    function handleEnd(this: Window, event: PointerEvent | DragEvent) {
       handleMove.call(this, event);
       // Call `didDrop` if the draggable is dropped on a droppable
       const {
@@ -267,8 +272,8 @@ const DNDScope: FC<DNDScopeProps> = ({
     }
     document.addEventListener('selectionchange', removeTextSelection);
     document.addEventListener('click', stopPropagation, { capture: true });
-    window.addEventListener('pointermove', handleMove);
-    window.addEventListener('pointerup', handleEnd);
+    window.addEventListener(moveEvent, handleMove);
+    window.addEventListener(endEvent, handleEnd);
     window.addEventListener('resize', handleCancel);
     window.addEventListener('dragstart', preventDefault);
     window.addEventListener('visibilitychange', handleCancel);
@@ -276,14 +281,20 @@ const DNDScope: FC<DNDScopeProps> = ({
     return () => {
       document.removeEventListener('selectionchange', removeTextSelection);
       document.removeEventListener('click', stopPropagation, { capture: true });
-      window.removeEventListener('pointermove', handleMove);
-      window.removeEventListener('pointerup', handleEnd);
+      window.removeEventListener(moveEvent, handleMove);
+      window.removeEventListener(endEvent, handleEnd);
       window.removeEventListener('resize', handleCancel);
       window.removeEventListener('dragstart', preventDefault);
       window.removeEventListener('visibilitychange', handleCancel);
       window.removeEventListener('contextmenu', preventDefault);
     };
-  }, [activeDraggable, dragOverlayPosition, positionOverlayPosition, store]);
+  }, [
+    activeDraggable,
+    dndType,
+    dragOverlayPosition,
+    positionOverlayPosition,
+    store,
+  ]);
 
   return (
     <InternalContext.Provider

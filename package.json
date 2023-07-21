@@ -1,6 +1,6 @@
 {
   "name": "@rational/dnd",
-  "version": "0.3.0-beta.4",
+  "version": "0.3.0-beta.5",
   "description": "Flexible and magical drag-and-drop for React",
   "main": "lib/index.js",
   "module": "lib/index.js",
