@@ -39,7 +39,10 @@ export interface DroppableItem<
     | ((
         activeDraggable: DraggableItem<DraggablePayload>,
         currentTransformedDraggableRect: Rect,
-        currentMouseCoord: Coord
+        currentMouseCoord: Coord,
+        // If the DnD actions is HTML5 drag-and-drop, this will be the
+        // DataTransfer object. Otherwise, it will be undefined.
+        dataTransfer?: DataTransfer
       ) => void)
     | undefined
   >;

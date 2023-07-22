@@ -249,7 +249,10 @@ const DNDScope: FC<DNDScopeProps> = ({
         activeDroppable.onDropRef.current?.(
           activeDraggable,
           currentTransformedPositionRect,
-          currentMouseCoord
+          currentMouseCoord,
+          event instanceof DragEvent && event.dataTransfer !== null
+            ? event.dataTransfer
+            : undefined
         );
         onDragEndRef.current?.(
           activeDraggable,
@@ -277,7 +280,7 @@ const DNDScope: FC<DNDScopeProps> = ({
     }
     if (respondToDND) {
       window.addEventListener('dragover', handleMove);
-      window.addEventListener('dragend', handleEnd);
+      window.addEventListener('drop', handleEnd);
     }
     window.addEventListener('resize', handleCancel);
     window.addEventListener('dragstart', preventDefault);
@@ -292,7 +295,7 @@ const DNDScope: FC<DNDScopeProps> = ({
       }
       if (respondToDND) {
         window.removeEventListener('dragover', handleMove);
-        window.removeEventListener('dragend', handleEnd);
+        window.removeEventListener('drop', handleEnd);
       }
       window.removeEventListener('resize', handleCancel);
       window.removeEventListener('dragstart', preventDefault);
