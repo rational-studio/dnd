@@ -1,7 +1,7 @@
 import { useEffect, useId, useRef, useState } from 'react';
 
 import { useInternalDNDScope } from '../components/DNDScope';
-import type { DataPayload, DraggableItem, Rect } from '../store';
+import type { Coord, DataPayload, DraggableItem, Rect } from '../store';
 import { clientDOMRectToRect } from './utils';
 
 type DroppableOptions<
@@ -13,7 +13,9 @@ type DroppableOptions<
   payload: DroppablePayload;
   onDrop?: (
     activeDraggable: DraggableItem<DraggablePayload>,
-    currentTransformedDraggableRect: Rect
+    currentTransformedDraggableRect: Rect,
+    currentMouseCoord: Coord,
+    dataTransfer: DataTransfer
   ) => void;
 };
 
