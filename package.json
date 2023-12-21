@@ -13,15 +13,15 @@
   "author": "Zhongliang Wang",
   "license": "MIT",
   "devDependencies": {
-    "@ianvs/prettier-plugin-sort-imports": "^4.1.0",
-    "@types/react": "^18.2.15",
-    "eslint": "^8.45.0",
+    "@ianvs/prettier-plugin-sort-imports": "^4.1.1",
+    "@types/react": "^18.2.45",
+    "eslint": "^8.56.0",
     "eslint-plugin-rational-studio": "^0.21.0",
-    "prettier": "^3.0.0",
+    "prettier": "^3.1.1",
     "react": "^18.2.0",
-    "rimraf": "^5.0.1",
-    "typescript": "^5.1.6",
-    "zustand": "^4.3.9"
+    "rimraf": "^5.0.5",
+    "typescript": "^5.3.3",
+    "zustand": "^4.4.7"
   },
   "peerDependencies": {
     "react": "^18.0.0",
